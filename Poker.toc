@@ -1,7 +1,7 @@
-## Interface: 00001
+## Interface: 60000
 ## Title: Poker
 ## Notes: An in-party poker addon. 
 ## Author: 
-## Version: 0.7
+## Version: 0.1
 Poker.lua
 Poker.xml

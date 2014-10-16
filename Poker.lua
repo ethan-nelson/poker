@@ -19,11 +19,14 @@ end
 
 
 function SlashCmdList.POKER(self)
+	local output = {}
 	rolls = {};
 	cards = {};
 	Poker_Rolls();
 	Poker_Tell_Raid("Incoming poker hand: ");
-	Poker_Determine_Suit();
+	Poker_Determine_Suit_and_Card();
+	output = cards[1] .. cards[2] .. cards[3] .. cards[4] .. cards[5];
+	Poker_Tell_Raid(output);
 end
 
 
@@ -44,62 +47,61 @@ function Poker_Rolls()
 end
 
 
-function Poker_Determine_Suit()
+function Poker_Determine_Suit_and_Card()
 	
 	for i = 1, 5 do
 		if (rolls[i] >= 1 and rolls[i] <= 13) then
 			if (rolls[i] == 1) then
-				cards[i] = "Ace of  Clubs.";
+				cards[i] = "A♣ ";
 			elseif (rolls[i] == 11) then
-				cards[i] = "Jack of Clubs.";
+				cards[i] = "J♣ ";
 			elseif (rolls[i] == 12) then
-				cards[i] = "Queen of Clubs.";
+				cards[i] = "Q♣ ";
 			elseif (rolls[i] == 13) then
-				cards[i] = "King of Clubs.";
+				cards[i] = "K♣ ";
 			else
-				cards[i] = tostring(rolls[i]) .. " of Clubs.";
+				cards[i] = tostring(rolls[i]) .. "♣ ";
 			end
 		elseif (rolls[i] >= 14 and rolls[i] <= 26) then
 			if (rolls[i] == 1+13) then
-				cards[i] = "Ace of Diamonds.";
+				cards[i] = "A♦ ";
 			elseif (rolls[i] == 11+13) then
-				cards[i] = "Jack of Diamonds.";
+				cards[i] = "J♦ ";
 			elseif (rolls[i] == 12+13) then
-				cards[i] = "Queen of Diamonds.";
+				cards[i] = "Q♦ ";
 			elseif (rolls[i] == 13+13) then
-				cards[i] = "King of Diamonds.";
+				cards[i] = "K♦ ";
 			else
-				cards[i] = tostring(rolls[i]-13) .. " of Diamonds.";
+				cards[i] = tostring(rolls[i]-13) .. "♦ ";
 			end
 		elseif (rolls[i] >= 27 and rolls[i] <= 39) then
 			if (rolls[i] == 1+26) then
-				cards[i] = "Ace of Hearts.";
+				cards[i] = "A♥ ";
 			elseif (rolls[i] == 11+26) then
-				cards[i] = "Jack of Hearts.";
+				cards[i] = "J♥ ";
 			elseif (rolls[i] == 12+26) then
-				cards[i] = "Queen of Hearts.";
+				cards[i] = "Q♥ ";
 			elseif (rolls[i] == 13+26) then
-				cards[i] = "King of Hearts.";
+				cards[i] = "K♥ ";
 			else
-				cards[i] = tostring(rolls[i]-26) .. " of Hearts.";
+				cards[i] = tostring(rolls[i]-26) .. "♥ ";
 			end
 		elseif (rolls[i] >= 40 and rolls[i] <= 52) then
 			if (rolls[i] == 1+39) then
-				cards[i] = "Ace of Spades.";
+				cards[i] = "A♠ ";
 			elseif (rolls[i] == 11+39) then
-				cards[i] = "Jack of Spades.";
+				cards[i] = "J♠ ";
 			elseif (rolls[i] == 12+39) then
-				cards[i] = "Queen of Spades.";
+				cards[i] = "Q♠ ";
 			elseif (rolls[i] == 13+39) then
-				cards[i] = "King of Spades.";
+				cards[i] = "K♠ ";
 			else
-				cards[i] = tostring(rolls[i]-39) .. "of Spades.";
+				cards[i] = tostring(rolls[i]-39) .. "♠ ";
 			end
 		else
-			Poker_Print("ERROR IN POKER PROGRAM. PLEASE SUBMIT TO bugs@forthewynn.info THAT YOU ROLLED A " .. rolls[i]);
+			Poker_Print("ERROR IN POKER PROGRAM. PLEASE SUBMIT TO info@forthewynn.info THAT YOU ROLLED A " .. rolls[i]);
 			Poker_Print("ALSO MENTION YOU ARE USING VERSION " .. pokerinfo);
 		end
-		Poker_Tell_Raid(cards[i])
 	end
 end
 

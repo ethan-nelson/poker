@@ -23,7 +23,6 @@ function SlashCmdList.POKER(self)
 	rolls = {};
 	cards = {};
 	Poker_Rolls();
-	Poker_Tell_Raid("Incoming poker hand: ");
 	Poker_Determine_Suit_and_Card();
 	output = cards[1] .. cards[2] .. cards[3] .. cards[4] .. cards[5];
 	Poker_Tell_Raid(output);

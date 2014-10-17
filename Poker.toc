@@ -1,7 +1,8 @@
 ## Interface: 60100
 ## Title: Poker
-## Notes: An in-party poker addon. 
-## Author: 
-## Version: 0.1
+## Notes: A fun poker addon to be used only for entertainment.
+## SavedVariables: ChatPreference
+## Author: Eman
+## Version: 0.2
 Poker.lua
 Poker.xml

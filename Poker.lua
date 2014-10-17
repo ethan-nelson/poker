@@ -3,8 +3,15 @@ pokerinfo = GetAddOnMetadata("Poker", "Version");
 function Poker_OnLoad(self)
 
 	SLASH_POKER1, SLASH_POKER2 = "/poker", "/Poker";
-	DEFAULT_CHAT_FRAME:AddMessage("Poker raid addon has loaded; you must be in a raid to use this addon!", 1, 1, 1);
+	DEFAULT_CHAT_FRAME:AddMessage("Poker addon has loaded; channel selected is " .. ChatPreference .. ".", 1, 1, 1);	
+	SlashCmdList["POKER"] = forrest;
 	
+	if (not ChatPreference) then
+		ChatPreference = "GUILD";
+		Poker_Print("You haven't set up a default channel, so Guild chat is default.", 1, 1, 1);
+		Poker_Print("To change channel, type /poker channelname. Channels like /1 or /2 are not possible.", 1, 1, 1);
+	end
+
 end
 
 
@@ -14,18 +21,36 @@ end
 
 
 function Poker_Tell_Raid(statement)
-	SendChatMessage("{P}: " .. statement,"RAID",nil,nil);
+	SendChatMessage("{P}: " .. statement,ChatPreference,nil,nil);
 end
 
 
-function SlashCmdList.POKER(self)
+function forrest(msg)
 	local output = {}
-	rolls = {};
-	cards = {};
-	Poker_Rolls();
-	Poker_Determine_Suit_and_Card();
-	output = cards[1] .. cards[2] .. cards[3] .. cards[4] .. cards[5];
-	Poker_Tell_Raid(output);
+	
+	if string.upper(msg) == "GUILD" then
+		ChatPreference = "GUILD";
+		Poker_Print("Channel preference set to guild.");
+	elseif string.upper(msg) == "SAY" then
+		ChatPreference = "SAY";
+		Poker_Print("Channel preference set to say.");
+	elseif string.upper(msg) == "PARTY" then
+		ChatPreference = "PARTY";
+		Poker_Print("Channel preference set to party.");
+	elseif string.upper(msg) == "RAID" then
+		ChatPreference = "RAID";
+		Poker_Print("Channel preference set to raid.");
+	elseif string.upper(msg) == "INSTANCE" then
+		ChatPreference = "INSTANCE";
+		Poker_Print("Channel preference set to instance.");
+	else
+		rolls = {};
+		cards = {};
+		Poker_Rolls();
+		Poker_Determine_Suit_and_Card();
+		output = cards[1] .. cards[2] .. cards[3] .. cards[4] .. cards[5];
+		Poker_Tell_Raid(output);
+	end
 end
 
 
@@ -47,7 +72,6 @@ end
 
 
 function Poker_Determine_Suit_and_Card()
-	
 	for i = 1, 5 do
 		if (rolls[i] >= 1 and rolls[i] <= 13) then
 			if (rolls[i] == 1) then

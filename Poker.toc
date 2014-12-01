@@ -2,7 +2,7 @@
 ## Title: Poker
 ## Notes: A fun poker addon to be used only for entertainment.
 ## SavedVariables: ChatPreference
-## Author: Eman
-## Version: 0.2
+## Author: Emann
+## Version: 1.0
 Poker.lua
 Poker.xml

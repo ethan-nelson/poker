@@ -57,7 +57,7 @@ function Draw_Hand()
 	Poker_Rolls(outrolls);
 	outcards = Poker_Determine_Suit_and_Card(outrolls);
 	output = outcards[1] .. " " .. outcards[2] .. " " .. outcards[3] .. " " .. outcards[4] .. " " .. outcards[5];
-	Poker_Tell_Raid(output);
+	Poker_Tell_Channel(output);
 	output2 = outrolls[1] .. " " .. outrolls[2] .. " " .. outrolls[3] .. " " .. outrolls[4] .. " " .. outrolls[5];
 	SendAddonMessage(MsgPrefix,output2,ChatPreference);
 end
@@ -96,51 +96,51 @@ function Poker_Determine_Suit_and_Card(rolls)
 	for i = 1, 5 do
 		if (rolls[i] >= 1 and rolls[i] <= 13) then
 			if (rolls[i] == 1) then
-				cards[i] = "A♣";
+				cards[i] = "Ac";
 			elseif (rolls[i] == 11) then
-				cards[i] = "J♣";
+				cards[i] = "Jc";
 			elseif (rolls[i] == 12) then
-				cards[i] = "Q♣";
+				cards[i] = "Qc";
 			elseif (rolls[i] == 13) then
-				cards[i] = "K♣";
+				cards[i] = "Kc";
 			else
-				cards[i] = tostring(rolls[i]) .. "♣";
+				cards[i] = tostring(rolls[i]) .. "c";
 			end
 		elseif (rolls[i] >= 14 and rolls[i] <= 26) then
 			if (rolls[i] == 1+13) then
-				cards[i] = "A♦";
+				cards[i] = "Ad";
 			elseif (rolls[i] == 11+13) then
-				cards[i] = "J♦";
+				cards[i] = "Jd";
 			elseif (rolls[i] == 12+13) then
-				cards[i] = "Q♦";
+				cards[i] = "Qd";
 			elseif (rolls[i] == 13+13) then
-				cards[i] = "K♦";
+				cards[i] = "Kd";
 			else
-				cards[i] = tostring(rolls[i]-13) .. "♦";
+				cards[i] = tostring(rolls[i]-13) .. "d";
 			end
 		elseif (rolls[i] >= 27 and rolls[i] <= 39) then
 			if (rolls[i] == 1+26) then
-				cards[i] = "A♥";
+				cards[i] = "Ah";
 			elseif (rolls[i] == 11+26) then
-				cards[i] = "J♥";
+				cards[i] = "Jh";
 			elseif (rolls[i] == 12+26) then
-				cards[i] = "Q♥";
+				cards[i] = "Qh";
 			elseif (rolls[i] == 13+26) then
-				cards[i] = "K♥";
+				cards[i] = "Kh";
 			else
-				cards[i] = tostring(rolls[i]-26) .. "♥";
+				cards[i] = tostring(rolls[i]-26) .. "h";
 			end
 		elseif (rolls[i] >= 40 and rolls[i] <= 52) then
 			if (rolls[i] == 1+39) then
-				cards[i] = "A♠";
+				cards[i] = "As";
 			elseif (rolls[i] == 11+39) then
-				cards[i] = "J♠";
+				cards[i] = "Js";
 			elseif (rolls[i] == 12+39) then
-				cards[i] = "Q♠";
+				cards[i] = "Qs";
 			elseif (rolls[i] == 13+39) then
-				cards[i] = "K♠";
+				cards[i] = "Ks";
 			else
-				cards[i] = tostring(rolls[i]-39) .. "♠";
+				cards[i] = tostring(rolls[i]-39) .. "s";
 			end
 		else
 			Poker_Print("ERROR IN POKER PROGRAM. PLEASE SUBMIT TO info@forthewynn.info THAT YOU ROLLED A " .. rolls[i]);
@@ -151,32 +151,7 @@ function Poker_Determine_Suit_and_Card(rolls)
 end
 
 
-function Poker_Tell_Raid(statement)
+function Poker_Tell_Channel(statement)
 	SendChatMessage("{P}: " .. statement,ChatPreference,nil,nil);
 end
 
-function Poker_Event(self, event, prefix, message, channel, sender)
-	local outcard = {}
-	if prefix == MsgPrefix then
-		if WindowFlag == 0 then
-			Frame:SetPoint("CENTER", UIParent, "CENTER");
-			Frame:SetWidth(400);
-			Frame:SetHeight(100);
-			Frame:SetFontObject("GameFontNormal");
-			local Back = Frame:CreateTexture("ARTWORK")
-			Back:SetAllPoints();
-			Back:SetTexture(0.2, 0.2, 0.2, 0.5);
-			Frame:AddMessage(string.format("%s: %s", sender, message));
-			Frame:Show();
-			WindowFlag = 1;
-		else
-			Frame:AddMessage(string.format("%s: %s", sender, message));
-		end
-	end
-end
-
-Frame = CreateFrame("ScrollingMessageFrame", "Frame", UIParent);
-Frame:RegisterEvent("CHAT_MSG_ADDON");
-Frame:EnableMouse(True);
-Frame:SetFading(False)
-Frame:SetScript("OnEvent", Poker_Event);

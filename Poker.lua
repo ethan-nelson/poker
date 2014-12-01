@@ -155,29 +155,3 @@ function Poker_Tell_Channel(statement)
 	SendChatMessage("{P}: " .. statement,ChatPreference,nil,nil);
 end
 
-
-function Poker_Event(self, event, prefix, message, channel, sender)
-	local outcard = {}
-	if prefix == MsgPrefix then
-		if WindowFlag == 0 then
-			Frame:SetPoint("CENTER", UIParent, "CENTER");
-			Frame:SetWidth(400);
-			Frame:SetHeight(100);
-			Frame:SetFontObject("GameFontNormal");
-			local Back = Frame:CreateTexture("ARTWORK")
-			Back:SetAllPoints();
-			Back:SetTexture(0.2, 0.2, 0.2, 0.5);
-			Frame:AddMessage(string.format("%s: %s", sender, message));
-			Frame:Show();
-			WindowFlag = 1;
-		else
-			Frame:AddMessage(string.format("%s: %s", sender, message));
-		end
-	end
-end
-
-Frame = CreateFrame("ScrollingMessageFrame", "Frame", UIParent);
-Frame:RegisterEvent("CHAT_MSG_ADDON");
-Frame:EnableMouse(True);
-Frame:SetFading(False)
-Frame:SetScript("OnEvent", Poker_Event);
